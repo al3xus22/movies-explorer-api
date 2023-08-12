@@ -2,6 +2,7 @@ const Movie = require('../models/film');
 const BadRequest = require('../errors/bad-request');
 const Forbidden = require('../errors/forbidden');
 const NotFoundError = require('../errors/not-found-err');
+const BEATFILM_URL = 'https://api.nomoreparties.co/beatfilm-movies';
 
 const getMovies = (req, res, next) => {
   Movie.find({ owner: req.user._id })
@@ -22,9 +23,9 @@ const saveMovie = (req, res, next) => {
     description,
     image,
     trailerLink,
+    thumbnail,
     nameRU,
     nameEN,
-    thumbnail,
     movieId,
   } = req.body;
 
