@@ -2,8 +2,8 @@ const Movie = require('../models/film');
 const BadRequest = require('../errors/bad-request');
 const Forbidden = require('../errors/forbidden');
 const NotFoundError = require('../errors/not-found-err');
-const BEATFILM_URL = 'https://api.nomoreparties.co/beatfilm-movies';
 
+// Получить сохраненные фильмы пользователя--------------------------------
 const getMovies = (req, res, next) => {
   Movie.find({ owner: req.user._id })
     .then((savedMovies) => {
@@ -14,6 +14,7 @@ const getMovies = (req, res, next) => {
     });
 };
 
+// Сохранить фильм----------------------------------------------------------
 const saveMovie = (req, res, next) => {
   const {
     country,
@@ -53,13 +54,14 @@ const saveMovie = (req, res, next) => {
     });
 };
 
+// Удалить фильм----------------------------------------------------------
 const deleteMovie = (req, res, next) => {
   const { movieId } = req.params;
   Movie.findById(movieId)
     .orFail(new NotFoundError('Фильм не найден'))
     .then((movie) => {
       if (!movie.owner.equals(req.user._id)) {
-        next(new Forbidden('Нельзя удалить чужой фильм'));
+        return next(new Forbidden('Нельзя удалить чужой фильм'));
       }
       return movie.deleteOne()
         .then(() => res.send(movie));

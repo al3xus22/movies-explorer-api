@@ -44,6 +44,8 @@ const updateUser = (req, res, next) => {
     .catch((err) => {
       if (err.name === 'ValidationError') {
         next(new BadRequest('Что-то пошло не так'));
+      } else if (err.code === 11000) {
+        next(new ConflictRequest('Такой пользователь уже существует!'));
       } else {
         next(err);
       }
