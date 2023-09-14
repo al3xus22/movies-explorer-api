@@ -7,4 +7,8 @@
 
 IP-адрес 158.160.111.23
 
+<<<<<<< HEAD
 Домен: https://api.films.nomoreparties.co
+=======
+Домен: https://api.films.nomoreparties.co
+>>>>>>> 720f635beaa2852e179d5fefc6cd835581f54b50
